@@ -8,10 +8,11 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
 ## HW1: Data Wrangling and Visualization with Snowshoe Hares 
 
-### Installing all the relevant packages for this assignment 
-```{r, echo = FALSE, message = FALSE, warning = FALSE, include = TRUE}
+Installing all the relevant packages for this assignment 
+```{r, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
 r = getOption("repos")
 r["CRAN"] = "http://cran.us.r-project.org"
 options(repos = r)
@@ -24,7 +25,7 @@ install.packages("skimr")
 install.packages("ggfortify")
 install.packages("sf")
 install.packages("tmap")
-
+install.packages("tidyverse")
 ```
 
 ### Attaching all of the relevant packages for this assignment with the library 
@@ -41,4 +42,51 @@ library(sf)
 library(tmap)
 ```
 
+### Reading in the data to form a new dataframe 
+```{r}
+snowshoe <- read_csv(here("data", "showshoe_lter.csv"))
+```
+
+### Data exploring and wrangling 
+```{r}
+summary(snowshoe) #Gives a summary of how many different variables there are in the dataframe
+View(snowshoe) #Opens a new dataframe with the dataset already in it 
+names(snowshoe) #Gives the number of column headers in the data set 
+head(snowshoe) #Gives a preview of the data set 
+tail(snowshoe) #Gives a preview of the data set 
+
+#Initial reaction: Columns that include NA data are the following: time, right ear, sex, age, hindfoot, and notes. 
+
+#What variables may be related to each other with this data? Could include sex, age, and weight. Maybe grid and date? 
+
+```
+
+### Graphing variables and attempting to understand the relationships between variables 
+```{r}
+ggplot(snowshoe, aes(x = weight, y = age)) + 
+  geom_line() + 
+  labs(x = "Weight of Snowshoe Hares") 
+       y = "Age of Snowshoe Hares")+ 
+  theme_light() + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        text = element_text(family = "Times"))  
+  
+```
+
+
+
+### Descriptive introductory summary of what the project is all about (3-4 sentences)  
+```{r}
+
+```
+
+### Map of the study area with images of snowshoe hares
+```{r}
+
+```
+
+### Finalized graph about the Bonanza Creek snowshoe hare population  
+```{r}
+
+```
 
