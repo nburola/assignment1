@@ -1,0 +1,44 @@
+---
+title: "ESM 244: Advanced Data Analysis HW#1"
+author: "Nathaniel Burola"
+date: "2/3/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## HW1: Data Wrangling and Visualization with Snowshoe Hares 
+
+### Installing all the relevant packages for this assignment 
+```{r, echo = FALSE, message = FALSE, warning = FALSE, include = TRUE}
+r = getOption("repos")
+r["CRAN"] = "http://cran.us.r-project.org"
+options(repos = r)
+install.packages("here")
+install.packages("janitor")
+install.packages("kableExtra")
+install.packages("naniar")
+install.packages("VIM")
+install.packages("skimr")
+install.packages("ggfortify")
+install.packages("sf")
+install.packages("tmap")
+
+```
+
+### Attaching all of the relevant packages for this assignment with the library 
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(janitor)
+library(here)
+library(kableExtra)
+library(naniar)
+library(VIM)
+library(skimr)
+library(ggfortify)
+library(sf)
+library(tmap)
+```
+
+
