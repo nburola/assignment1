@@ -25,7 +25,8 @@ install.packages("skimr")
 install.packages("ggfortify")
 install.packages("sf")
 install.packages("tmap")
-install.packages("tidyverse")
+install.packages("tidyverse") 
+install.packages("lubridate")
 ```
 
 ### Attaching all of the relevant packages for this assignment with the library 
@@ -40,6 +41,8 @@ library(skimr)
 library(ggfortify)
 library(sf)
 library(tmap)
+library(ggplot2)
+library(lubridate)
 ```
 
 ### Reading in the data to form a new dataframe 
@@ -59,18 +62,32 @@ tail(snowshoe) #Gives a preview of the data set
 
 #What variables may be related to each other with this data? Could include sex, age, and weight. Maybe grid and date? 
 
+#What do you want to graph with the snowshoe data? 
+
+#Statement: I want to see how the weight of all the snowshoe hares both female and male will vary across the years of the study 
 ```
 
-### Graphing variables and attempting to understand the relationships between variables 
+#Filtering and constructing a new dataframe with desired variables 
 ```{r}
-ggplot(snowshoe, aes(x = weight, y = age)) + 
-  geom_line() + 
-  labs(x = "Weight of Snowshoe Hares") 
-       y = "Age of Snowshoe Hares")+ 
-  theme_light() + 
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        text = element_text(family = "Times"))  
-  
+snowfiltered = subset(snowshoe, select = -c(time, grid, trap, l_ear, r_ear, hindft, notes, b_key, session_id, study)) #Filtered out all the columns that are not desired in the new dataframe 
+
+#Transforming all of the classes of the variables from character to numeric 
+as.numeric("weight")
+as.numeric("sex")
+as.numeric("age")
+```
+
+### Trying to filter the date column by year 
+```{r}
+
+snow <- strptime(as.Date(snowfiltered$date), "%m/%d/%y")
+
+class(snowfiltered$date)
+snow
+
+mutate(snowfiltered, date_new = snow)
+
+
 ```
 
 
@@ -87,6 +104,10 @@ ggplot(snowshoe, aes(x = weight, y = age)) +
 
 ### Finalized graph about the Bonanza Creek snowshoe hare population  
 ```{r}
+snowgraph <- ggplot(snowfiltered, aes(date, weight)) + 
+  geom_point()
+
+snowgraph
 
 ```
 
