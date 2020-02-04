@@ -78,7 +78,7 @@ snowfiltered = subset(snowshoe, select = -c(time, grid, trap, l_ear, r_ear, hind
 #Transforming all of the classes of the variables from character to numeric 
 ```
 
-### Experimenting with Different Types of Graphs 
+### Filtering the Dataset 
 ```{r}
 #Filtering the dataset in order to get lower case letters for male and females and filtering out the rest of the NA values 
 snow_tidy <- snowfiltered %>%  
@@ -88,24 +88,6 @@ snow_tidy <- snowfiltered %>%
       sex == "f" ~ "F", 
       sex == "m" ~ "M")) %>%  
   filter(sex!= "NA")
-
-#Filtering the male gender out of the new data frame to find the average 
-snow_female <- snow_tidy %>%  
-  filter(sex %in% c ("f", "F"))
-
-#Finding the average of the snowshoe female population from 1999-2012 in Bonanza Creek 
-
-snowfemalemean <- mean(snow_female$weight, na.rm = TRUE)
-#The average weight for snowshoe females in the data frame is 1289.994g 
-
-#Filtering the female gender out of the new data frame to find the average 
-snow_male <- snow_tidy %>%  
-  filter(sex %in%c ("m", "M"))
-
-#Finding the average of the snowshoe male population from 1999-2012 in Bonaza Creek 
-
-snowmalemean <- mean(snow_male$weight, na.rm = TRUE)
-#The average weight for snowshoe males in the data frame is 1344.408g 
 ```
 
 ### Descriptive introductory summary of what the project is all about (3-4 sentences)  
@@ -120,7 +102,7 @@ snowmalemean <- mean(snow_male$weight, na.rm = TRUE)
 
 ### Finalized graph about the Bonanza Creek snowshoe hare population  
 ```{r}
-#Creating a histogram based on weight 
+#Creating a histogram based on the weight of the snowshore hares with a frequency count of the data split between by sex (male/female)
 snow_plot <- ggplot(snow_tidy, aes(x=weight, color=sex, fill=sex)) +
   geom_histogram(position="identity", alpha=0.5, brewerPalette="Paired",alpha=0.5) + 
   labs(title="Weight Distribution of Female and Male Snowshoe Hares from 1999 - 2012",x="Weight (g)", y = "Frequency Count of Snowshoe Hares")+
