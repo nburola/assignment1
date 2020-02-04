@@ -27,6 +27,8 @@ install.packages("sf")
 install.packages("tmap")
 install.packages("tidyverse") 
 install.packages("lubridate")
+install.packages("hrbrthemes")
+install.packages("viridis")
 ```
 
 ### Attaching all of the relevant packages for this assignment with the library 
@@ -43,11 +45,13 @@ library(sf)
 library(tmap)
 library(ggplot2)
 library(lubridate)
+library(hrbrthemes)
+library(viridis)
 ```
 
 ### Reading in the data to form a new dataframe 
 ```{r}
-snowshoe <- read_csv(here("data", "showshoe_lter.csv"))
+snowshoe <- read_csv("showshoe_lter.csv")
 ```
 
 ### Data exploring and wrangling 
@@ -72,25 +76,37 @@ tail(snowshoe) #Gives a preview of the data set
 snowfiltered = subset(snowshoe, select = -c(time, grid, trap, l_ear, r_ear, hindft, notes, b_key, session_id, study)) #Filtered out all the columns that are not desired in the new dataframe 
 
 #Transforming all of the classes of the variables from character to numeric 
-as.numeric("weight")
-as.numeric("sex")
-as.numeric("age")
 ```
 
-### Trying to filter the date column by year 
+### Experimenting with Different Types of Graphs 
 ```{r}
+#Filtering the dataset in order to get lower case letters for male and females and filtering out the rest of the NA values 
+snow_tidy <- snowfiltered %>%  
+  filter(sex %in% c ("f", "m", "M", "F")) %>%  
+  mutate(
+    sex = case_when(
+      sex == "f" ~ "F", 
+      sex == "m" ~ "M")) %>%  
+  filter(sex!= "NA")
 
-snow <- strptime(as.Date(snowfiltered$date), "%m/%d/%y")
+#Filtering the male gender out of the new data frame to find the average 
+snow_female <- snow_tidy %>%  
+  filter(sex %in% c ("f", "F"))
 
-class(snowfiltered$date)
-snow
+#Finding the average of the snowshoe female population from 1999-2012 in Bonanza Creek 
 
-mutate(snowfiltered, date_new = snow)
+snowfemalemean <- mean(snow_female$weight, na.rm = TRUE)
+#The average weight for snowshoe females in the data frame is 1289.994g 
 
+#Filtering the female gender out of the new data frame to find the average 
+snow_male <- snow_tidy %>%  
+  filter(sex %in%c ("m", "M"))
 
+#Finding the average of the snowshoe male population from 1999-2012 in Bonaza Creek 
+
+snowmalemean <- mean(snow_male$weight, na.rm = TRUE)
+#The average weight for snowshoe males in the data frame is 1344.408g 
 ```
-
-
 
 ### Descriptive introductory summary of what the project is all about (3-4 sentences)  
 ```{r}
@@ -104,10 +120,13 @@ mutate(snowfiltered, date_new = snow)
 
 ### Finalized graph about the Bonanza Creek snowshoe hare population  
 ```{r}
-snowgraph <- ggplot(snowfiltered, aes(date, weight)) + 
-  geom_point()
+#Creating a histogram based on weight 
+snow_plot <- ggplot(snow_tidy, aes(x=weight, color=sex, fill=sex)) +
+  geom_histogram(position="identity", alpha=0.5, brewerPalette="Paired",alpha=0.5) + 
+  labs(title="Weight Distribution of Female and Male Snowshoe Hares from 1999 - 2012",x="Weight (g)", y = "Frequency Count of Snowshoe Hares")+
+  theme_bw()
 
-snowgraph
+snow_plot
 
 ```
 
