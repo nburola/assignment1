@@ -92,7 +92,7 @@ snow_tidy <- snowfiltered %>%
 ```{r}
 #Snowshore hares, otherwise known as Lepus americanus, are a keystone prey species that play an ecologically important role in northern boreal forests and experience population fluctuations of 8-11 years. This capture-recapture study of snowshoe hares was conducted at 5 locales in the Tanana valley from study sites Tok in the east to Clear in the west from 1999-2012 with a time duration of 13 years. Snowshoe hare population densities were the highest in 1999 and declined thereafter. This study did not find any declines in apparent survival during declining densities in these study populations. 
 
-![Snowshoe Hare (Lepus Americanus) Source: Northwest Wildlife Preservation Society . “Snowshoe Hare.” Northwest Wildlife Preservation Society, 2020, www.northwestwildlife.com/learn/species-reports/snowshoe-hare/.](\images\snowshoe.png)
+!["Snowshoe Hare (Lepus Americanus) Source: Northwest Wildlife Preservation Society . “Snowshoe Hare.” Northwest Wildlife Preservation Society, 2020, www.northwestwildlife.com/learn/species-reports/snowshoe-hare/."](\images\snowshoe.png)
 ```
 
 ```
