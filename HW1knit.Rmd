@@ -4,8 +4,7 @@ author: "Nathaniel Burola"
 date: "2/3/2020"
 output: html_document
 ---
-
-```{r setup, include=FALSE}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 local({
@@ -49,7 +48,6 @@ local({
 ```
 
 ## HW1: Data Wrangling and Visualization with Snowshoe Hares 
-Installing all the relevant packages for this assignment 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
 r = getOption("repos")
 r["CRAN"] = "http://cran.us.r-project.org"
@@ -86,12 +84,12 @@ library(factoextra)
 ```
 
 ### Reading in the data to form a new dataframe 
-```{r}
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
 snowshoe <- read_csv("showshoe_lter.csv")
 ```
 
 ### Data exploring and wrangling 
-```{r}
+```{r, echo = TRUE, message = FALSE, warning = FALSE, results = "hide"}
 summary(snowshoe) #Gives a summary of how many different variables there are in the dataframe
 View(snowshoe) #Opens a new dataframe with the dataset already in it 
 names(snowshoe) #Gives the number of column headers in the data set 
@@ -104,18 +102,16 @@ tail(snowshoe) #Gives a preview of the data set
 
 #What do you want to graph with the snowshoe data? 
 
-#Statement: I want to see how the weight of all the snowshoe hares both female and male will vary across the years of the study 
+#Statement: I want to see how the weight of all the snowshoe hares both female and male will vary during the study 
 ```
  
-#Filtering and constructing a new dataframe with desired variables 
-```{r}
+### Filtering and constructing a new dataframe with desired variables 
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
 snowfiltered = subset(snowshoe, select = -c(time, grid, trap, l_ear, r_ear, hindft, notes, b_key, session_id, study)) #Filtered out all the columns that are not desired in the new dataframe 
-
-#Transforming all of the classes of the variables from character to numeric 
 ```
 
 ### Filtering the Dataset 
-```{r}
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
 #Filtering the dataset in order to get lower case letters for male and females and filtering out the rest of the NA values 
 snow_tidy <- snowfiltered %>%  
   filter(sex %in% c ("f", "m", "M", "F")) %>%  
@@ -127,13 +123,15 @@ snow_tidy <- snowfiltered %>%
 ```
 
 ### Descriptive introductory summary of what the project is all about (3-4 sentences)
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+#Snowshore hares, otherwise known as Lepus americanus, are a keystone prey species that play an ecologically important role in northern boreal forests and experience population fluctuations of 8-11 years. This capture-recapture study of snowshoe hares was conducted at 5 locales in the Tanana valley from study sites Tok in the east to Clear in the west from 1999-2012 with a time duration of 13 years. Snowshoe hare population densities were the highest in 1999 and declined thereafter. This study did not find any declines in apparent survival during declining densities in these study populations (Source: Kielland K., F. S. Chapin, R. W. Ruess. 2017. Snowshoe hare physical data in Bonanza Creek Experimental Forest: 1999-Present. Environmental Data Initiative. https://doi.org/10.6073/pasta/03dce4856d79b91557d8e6ce2cbcdc14.)
+```
+
+### Snowshoe Hare (Lepus americanus) 
 ```{r echo=FALSE, out.width='100%', fig.align = "center", echo = FALSE}
 knitr::include_graphics("images/snowshoe.png")
 
-#Snowshore hares, otherwise known as Lepus americanus, are a keystone prey species that play an ecologically important role in northern boreal forests and experience population fluctuations of 8-11 years. This capture-recapture study of snowshoe hares was conducted at 5 locales in the Tanana valley from study sites Tok in the east to Clear in the west from 1999-2012 with a time duration of 13 years. Snowshoe hare population densities were the highest in 1999 and declined thereafter. This study did not find any declines in apparent survival during declining densities in these study populations. 
 ```
-
-### Image of the Snowshoe Hare (Lepus americanus) 
 
 
 ### Finalized graph about the Bonanza Creek snowshoe hare population  
@@ -141,15 +139,20 @@ knitr::include_graphics("images/snowshoe.png")
 #Creating a histogram based on the weight of the snowshore hares with a frequency count of the data split between by sex (male/female)
 snow_plot <- ggplot(snow_tidy, aes(x=weight, color=sex, fill=sex)) +
   geom_histogram(position="identity", alpha=0.5, brewerPalette="Paired",alpha=0.5) + 
-  labs(title="Weight Distribution of Female and Male Snowshoe Hares from 1999 - 2012",x="Weight (g)", y = "Frequency Count of Snowshoe Hares", caption = "Weight distribution of male and female snowshoe hares (Lepus americanus) \n in Bonanza Creek Experimental Forest (1999-2012) \n (Source: https://portal.lternet.edu/nis/metadataviewer?packageid=knb-lter-bnz.55.22)") + 
+  labs(title="Weight Distribution of Female and Male Snowshoe Hares from 1999 - 2012",x="Weight (g)", y = "Frequency Count of Snowshoe Hares", caption = "Weight distribution of male and female snowshoe hares (Lepus americanus) \n in Bonanza Creek Experimental Forest (1999-2012) \n (Source: Kielland K., F. S. Chapin, R. W. Ruess. 2017. Snowshoe hare physical data in Bonanza Creek Experimental Forest: 1999-Present. Environmental Data Initiative. https://doi.org/10.6073/pasta/03dce4856d79b91557d8e6ce2cbcdc14.))") + 
   theme_bw()
 
-snow_plot+theme(plot.caption=element_text(hjust=0.5))
+snow_plot+theme(plot.caption=element_text(hjust=0.5)) #Adjusting the alignment of the title as well as the citation 
 
 ```
 
-#Creating a New Data Frame with Desirable Traits  
-```{r}
+### Interpreting the Bonanaza Creek snowshoe hare population graph 
+```{r, echo = TRUE, message = FALSE, warning = FALSE} 
+#There is a wide range of weights associated with either gender of the snowshoe hare population in Bonanza Creek from 1999-2012. However, there are noticeable differences between male and female snowshoe hares. It would seem that overall there were more male snowshoe hares that weighed in the 1,100 - 1,400 gram range than compared to female snowshoe hares. 
+```
+
+### Creating a new dataframe with desirable traits   
+```{r, echo = TRUE, message = FALSE, warning = FALSE, results = "hide"}
 
 #Creating a new data frame to include variables that cannot be analyzed in the numeric class 
 snowtable = subset(snowshoe, select = -c(time, grid, trap, l_ear, session_id, study, notes, b_key, age, r_ear, hindft)) 
@@ -182,10 +185,9 @@ snow_female <- snow_analysis %>%
 snow_female
 ```
 
-#Creating the Finalized HTML Data Table 
-```{r}
-
-#Calculating Descriptive Statistics of the Weight of Female Snowshoe Hares 
+### Calculating  descriptive statistics and creating a new data frame 
+```{r, echo = TRUE, message = FALSE, warning = FALSE, results = "hide"} 
+#Calculating descriptive statistics of the weight of female snowshoe hares 
 mean(snow_female$`Weight of Hare (g)`, na.rm = TRUE)
 #1289.994
 median(snow_female$`Weight of Hare (g)`, na.rm = TRUE)
@@ -199,6 +201,7 @@ max(snow_female$`Weight of Hare (g)`, na.rm = TRUE)
 range(snow_female$`Weight of Hare (g)`, na.rm = TRUE)
 #1930 
 
+#Creating a new data frame that encompasses all of the previous descrptive statistical results of the weight for female snowshoe hares 
 snow_tbl <- data.frame(
   Statistics = c("Mean", "Median", "Standard Deviation", "Minimum", "Maximum", "Range"),
   Calculations = c(
@@ -211,23 +214,32 @@ snow_tbl <- data.frame(
   )
 )
 
+```
+
+### Creating the finalized HTML data table 
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+#Creating a kable table with all of the previous descriptive statistical results of the weight for female snowshoe hares 
 kable(snow_tbl, caption = '<b>Female Snowshoe Hare Weight Descriptive Statistics</b>') %>%
   kable_styling(full_width = F) %>% 
   column_spec(1, bold = T, border_right = T) %>%
   column_spec(2, width = "30em", background = "white") %>%  
-  footnote(general = "Descriptive statistics which calculate the mean to range of weights for all female snowshoe hare populations in Bonanza Creek Experimental Forest (1999-2012)")    
+  footnote(general = "Descriptive statistics which calculate the mean to range of weights for all female snowshoe hare populations in Bonanza Creek Experimental Forest (1999-2012)")
 ```
 
-## HW2: Principal Components Analysis 
+### Interpreting the finalized HTML data table 
+```{r, echo = TRUE, message = FALSE, warning = FALSE}  
+#According to the data, female snowshoe hare populations from 1999-2012 in Bonanza Creek have a mean weight of 1,290 grams and a median weight of 1,350 grams. The lightest female snowshoe hare weighed 240 grams while the heaviest female snowshoe hare weighed 2,170 grams. Taking into account the entire female population, there was a range of 1,930 grams from the lightest to the heaviest female snowshoe hare. The standard deviation of the female snowshoe population was 325 grams in relation to the mean weight of 1,290 grams.
+```
 
-#Reading in the dataset 
-```{r}
+## HW2: Principal Components Analysis (PCA) of USDA Nutrient Food Groups 
+
+### Reading in the dataset 
+```{r, echo = TRUE, message = FALSE, warning = FALSE}  
 nutrients <- read_csv("usda_nutrients.csv")
 ```
 
-#Doing some data wrangling to clean up and filter the data 
-```{r}
-
+### Doing some data wrangling to clean up and filter the data 
+```{r, echo = TRUE, message = FALSE, warning = FALSE}   
 #Filtered the dataset through food group in onder to have vegetables and vegetable products as well as fruits and fruit juices 
 
 #Retaining observations where the ShortDescrip column would contain the word "RAW" 
@@ -237,18 +249,31 @@ usda <- nutrients %>%
   filter(str_detect(ShortDescrip, pattern="RAW"))
 ```
 
-#Useful Descrptive Summary (3-4 lines)
-```{r}
+### Useful Descrptive Summary (3-4 lines)
+```{r, echo = TRUE, message = FALSE, warning = FALSE} 
+
+#What humans eat in terms of their food supply and the scientiifc understanding of relationships between dietary intakes and health have evolved over time. As the United States Department of Agriculture (USDA), this organizations is responsible for maintaining food composition data resources that can meet the needs of diverse users from researchers to health professionals. There is a need for transparent and easily accessible  information about nutrients and a new approach to presenting food profile information as the food industry changes over time. This dataset, titled FoodData Central, presents food profile information in a scientifically rigorous way (Source: FoodData Central . “FoodData Central .” FoodData Central, 2020, fdc.nal.usda.gov/about-us.html.) 
 
 ```
 
-#Creating the finalized PCA Analysis 
-```{r, PCA, biplot, message = FALSE, warning = FALSE}
+### Farmers and the USDA helping each other out 
+```{r echo=FALSE, out.width='100%', fig.align = "center", echo = FALSE}
+knitr::include_graphics("images/usda.jpg")
+```
 
+### Coming up with PCA analysis and variance determination 
+```{r, message = FALSE, warning = FALSE, results = "hide"}
+
+#Coming with PCA analysis 
 usda_pca <- prcomp(nutrients[9:30], scale = TRUE)
 
+#Determining how much variance is in each PCA 
 summary(usda_pca)
+```
 
+### Creating the finalized PCA analysis biplot 
+```{r, PCA, biplot, message = FALSE, warning = FALSE}
+#Coming up with the biplot graph for the dataset and using autoplot since the original dataset is a mess 
 usda_bilplot <- autoplot(usda_pca, 
                        colour = NA, 
                        loadings.label = TRUE, 
@@ -261,11 +286,12 @@ usda_bilplot <- autoplot(usda_pca,
        caption = "PCA biplot representing fruit and vegetable nutrient levels \n including variables from protein (g) to zinc levels \n (Source: https://fdc.nal.usda.gov/index.html)") + 
   theme_bw()
 
+#Changing the alignment of both title and caption for th PCA biplot 
 usda_bilplot + theme(plot.caption=element_text(hjust=0.5)) + theme(plot.title=element_text(hjust = 0.5))
 ```
 
-#Interpreting the PCA Biplot: Fruits and Vegetable Nutrient Levels Example 
-```{r}
+### Interpreting the PCA Biplot: Fruits and Vegetable Nutrient Levels Example 
+```{r, message = FALSE, warning = FALSE}
 #Postive Trend: In terms of postive correlation, Riboflavin and Niacin are postively correlated with one another on account of the length and overlap of their biplot lines. Magnesium and Thiamin are postively correlated with each other as well as Iron and Folate. Sugar and Carbs are postively correlated with one another since they are still in close proximity to one another with their biplot lines.  
 
 #Negative Trend: In terms of negative correlation, Sugar and Protein are negatively correlated due to the 180 degree difference between biplot lines earning a correlation of -1. Sugar and Selenium also appear to be negatively correlated as well. 
