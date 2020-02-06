@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -340,6 +339,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -472,24 +472,24 @@ names(snowshoe) #Gives the number of column headers in the data set </code></pre
 <pre><code>## # A tibble: 6 x 14
 ##    date time  grid  trap  l_ear r_ear sex   age   weight hindft notes b_key
 ##   &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
-## 1  1998 NA    bonr~ 1A    414D~    NA &lt;NA&gt;  &lt;NA&gt;    1370    160 &lt;NA&gt;    917
-## 2  1998 NA    bonr~ 2C    414D~    NA M     &lt;NA&gt;    1430     NA &lt;NA&gt;    936
-## 3  1998 NA    bonr~ 2D    414D~    NA M     &lt;NA&gt;    1430     NA &lt;NA&gt;    921
-## 4  1998 NA    bonr~ 2E    414D~    NA &lt;NA&gt;  &lt;NA&gt;    1490    135 &lt;NA&gt;    931
-## 5  1998 NA    bonr~ 3B    414D~    NA &lt;NA&gt;  &lt;NA&gt;    1710    150 &lt;NA&gt;    933
-## 6  1998 NA    bonr~ 3D    414D~    NA F     &lt;NA&gt;    1890    145 &lt;NA&gt;    926
-## # ... with 2 more variables: session_id &lt;dbl&gt;, study &lt;chr&gt;</code></pre>
+## 1  1998 NA    bonr… 1A    414D…    NA &lt;NA&gt;  &lt;NA&gt;    1370    160 &lt;NA&gt;    917
+## 2  1998 NA    bonr… 2C    414D…    NA M     &lt;NA&gt;    1430     NA &lt;NA&gt;    936
+## 3  1998 NA    bonr… 2D    414D…    NA M     &lt;NA&gt;    1430     NA &lt;NA&gt;    921
+## 4  1998 NA    bonr… 2E    414D…    NA &lt;NA&gt;  &lt;NA&gt;    1490    135 &lt;NA&gt;    931
+## 5  1998 NA    bonr… 3B    414D…    NA &lt;NA&gt;  &lt;NA&gt;    1710    150 &lt;NA&gt;    933
+## 6  1998 NA    bonr… 3D    414D…    NA F     &lt;NA&gt;    1890    145 &lt;NA&gt;    926
+## # … with 2 more variables: session_id &lt;dbl&gt;, study &lt;chr&gt;</code></pre>
 <pre class="r"><code>tail(snowshoe) #Gives a preview of the data set </code></pre>
 <pre><code>## # A tibble: 6 x 14
 ##    date time  grid  trap  l_ear r_ear sex   age   weight hindft notes b_key
 ##   &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
-## 1  2002 NA    bonr~ 2b    1201   1202 &lt;NA&gt;  &lt;NA&gt;    1625     NA &lt;NA&gt;     63
-## 2  2002 NA    bonr~ 1b    1201   1202 &lt;NA&gt;  &lt;NA&gt;    1400     NA &lt;NA&gt;     63
-## 3  2002 NA    bonr~ 4b    1201   1202 &lt;NA&gt;  &lt;NA&gt;      NA     NA &lt;NA&gt;     63
-## 4  2002 NA    bonr~ 4b    1217   1218 &lt;NA&gt;  &lt;NA&gt;    1000    134 &lt;NA&gt;     69
-## 5  2002 NA    bonr~ 6d    1217   1218 &lt;NA&gt;  &lt;NA&gt;     990     NA &lt;NA&gt;     69
-## 6  2002 NA    bonr~ 4b    1058   1060 M     &lt;NA&gt;    1460    119 &lt;NA&gt;     32
-## # ... with 2 more variables: session_id &lt;dbl&gt;, study &lt;chr&gt;</code></pre>
+## 1  2002 NA    bonr… 2b    1201   1202 &lt;NA&gt;  &lt;NA&gt;    1625     NA &lt;NA&gt;     63
+## 2  2002 NA    bonr… 1b    1201   1202 &lt;NA&gt;  &lt;NA&gt;    1400     NA &lt;NA&gt;     63
+## 3  2002 NA    bonr… 4b    1201   1202 &lt;NA&gt;  &lt;NA&gt;      NA     NA &lt;NA&gt;     63
+## 4  2002 NA    bonr… 4b    1217   1218 &lt;NA&gt;  &lt;NA&gt;    1000    134 &lt;NA&gt;     69
+## 5  2002 NA    bonr… 6d    1217   1218 &lt;NA&gt;  &lt;NA&gt;     990     NA &lt;NA&gt;     69
+## 6  2002 NA    bonr… 4b    1058   1060 M     &lt;NA&gt;    1460    119 &lt;NA&gt;     32
+## # … with 2 more variables: session_id &lt;dbl&gt;, study &lt;chr&gt;</code></pre>
 <pre class="r"><code>#Initial reaction: Columns that include NA data are the following: time, right ear, sex, age, hindfoot, and notes. 
 
 #What variables may be related to each other with this data? Could include sex, age, and weight. Maybe grid and date? 
@@ -515,7 +515,7 @@ snow_tidy &lt;- snowfiltered %&gt;%
 </div>
 <div id="descriptive-introductory-summary-of-what-the-project-is-all-about-3-4-sentences" class="section level3">
 <h3>Descriptive introductory summary of what the project is all about (3-4 sentences)</h3>
-<pre class="r"><code>#Snowshore hares, otherwise known as Lepus americanus, are a keystone prey species that play an ecologically important role in northern boreal forests and experience population fluctuations of 8-11 years. This capture-recapture study of snowshoe hares was conducted at 5 locales in the Tanana valley from study sites Tok in the east to Clear in the west from 1999-2012 with a time duration of 13 years. Snowshoe hare population densities were the highest in 1999 and declined thereafter. This study did not find any declines in apparent survival during declining densities in these study populations </code></pre>
+<pre class="r"><code>#Snowshore hares, otherwise known as Lepus americanus, are a keystone prey species that play an ecologically important role in northern boreal forests and experience population fluctuations of 8-11 years. This capture-recapture study of snowshoe hares was conducted at 5 locales in the Tanana valley from study sites Tok in the east to Clear in the west from 1999-2012 with a time duration of 13 years. Snowshoe hare population densities were the highest in 1999 and declined thereafter. This study did not find any declines in apparent survival during declining densities in these study populations. </code></pre>
 </div>
 <div id="image-of-the-snowshoe-hare-lepus-americanus" class="section level3">
 <h3>Image of the Snowshoe Hare (Lepus americanus)</h3>
@@ -568,7 +568,7 @@ snow_male</code></pre>
 ##  8            2008 M                     1290
 ##  9            2008 M                     1330
 ## 10            2008 M                     1470
-## # ... with 509 more rows</code></pre>
+## # … with 509 more rows</code></pre>
 <pre class="r"><code>#Filtering out male snowshow hares to only get the females for data analysis results 
 snow_female &lt;- snow_analysis %&gt;%  
  filter(Sex!= &quot;M&quot;)
@@ -587,7 +587,7 @@ snow_female</code></pre>
 ##  8            2008 F                      530
 ##  9            2008 F                      485
 ## 10            2008 F                     1550
-## # ... with 550 more rows</code></pre>
+## # … with 550 more rows</code></pre>
 <p>#Creating the Finalized HTML Data Table</p>
 <pre class="r"><code>#Calculating Descriptive Statistics of the Weight of Female Snowshoe Hares 
 mean(snow_female$`Weight of Hare (g)`, na.rm = TRUE)</code></pre>

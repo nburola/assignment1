@@ -49,7 +49,6 @@ local({
 ```
 
 ## HW1: Data Wrangling and Visualization with Snowshoe Hares 
-
 Installing all the relevant packages for this assignment 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
 r = getOption("repos")
@@ -59,16 +58,14 @@ install.packages("here")
 install.packages("janitor")
 install.packages("kableExtra")
 install.packages("naniar")
-install.packages("VIM")
 install.packages("skimr")
 install.packages("ggfortify")
-install.packages("sf")
-install.packages("tmap")
 install.packages("tidyverse") 
 install.packages("hrbrthemes")
 install.packages("viridis")
 install.packages("magrittr")
 install.packages("qwraps2")
+install.packages("factoextra")
 ```
 
 ### Attaching all of the relevant packages for this assignment with the library 
@@ -78,15 +75,14 @@ library(janitor)
 library(here)
 library(kableExtra)
 library(naniar)
-library(VIM)
 library(skimr)
 library(ggfortify)
-library(sf)
 library(tmap)
 library(ggplot2)
 library(hrbrthemes)
 library(qwraps2)
 library(magrittr)
+library(factoextra)
 ```
 
 ### Reading in the data to form a new dataframe 
@@ -131,21 +127,14 @@ snow_tidy <- snowfiltered %>%
 ```
 
 ### Descriptive introductory summary of what the project is all about (3-4 sentences)
-```{r}
-<<<<<<< HEAD
-#Snowshore hares, otherwise known as Lepus americanus, are a keystone prey species that play an ecologically important role in northern boreal forests and experience population fluctuations of 8-11 years. This capture-recapture study of snowshoe hares was conducted at 5 locales in the Tanana valley from study sites Tok in the east to Clear in the west from 1999-2012 with a time duration of 13 years. Snowshoe hare population densities were the highest in 1999 and declined thereafter. This study did not find any declines in apparent survival during declining densities in these study populations. 
-
-!["Snowshoe Hare (Lepus Americanus) Source: Northwest Wildlife Preservation Society . “Snowshoe Hare.” Northwest Wildlife Preservation Society, 2020, www.northwestwildlife.com/learn/species-reports/snowshoe-hare/."](\images\snowshoe.png)
-=======
-#Snowshore hares, otherwise known as Lepus americanus, are a keystone prey species that play an ecologically important role in northern boreal forests and experience population fluctuations of 8-11 years. This capture-recapture study of snowshoe hares was conducted at 5 locales in the Tanana valley from study sites Tok in the east to Clear in the west from 1999-2012 with a time duration of 13 years. Snowshoe hare population densities were the highest in 1999 and declined thereafter. This study did not find any declines in apparent survival during declining densities in these study populations 
->>>>>>> b9428c0a99b6a6396749fc05cbb892a8cd4f41ec
-```
-
-### Image of the Snowshoe Hare (Lepus americanus) 
 ```{r echo=FALSE, out.width='100%', fig.align = "center", echo = FALSE}
 knitr::include_graphics("images/snowshoe.png")
 
+#Snowshore hares, otherwise known as Lepus americanus, are a keystone prey species that play an ecologically important role in northern boreal forests and experience population fluctuations of 8-11 years. This capture-recapture study of snowshoe hares was conducted at 5 locales in the Tanana valley from study sites Tok in the east to Clear in the west from 1999-2012 with a time duration of 13 years. Snowshoe hare population densities were the highest in 1999 and declined thereafter. This study did not find any declines in apparent survival during declining densities in these study populations. 
 ```
+
+### Image of the Snowshoe Hare (Lepus americanus) 
+
 
 ### Finalized graph about the Bonanza Creek snowshoe hare population  
 ```{r, message = FALSE, warning = FALSE, fig.align="left"}
@@ -227,7 +216,60 @@ kable(snow_tbl, caption = '<b>Female Snowshoe Hare Weight Descriptive Statistics
   column_spec(1, bold = T, border_right = T) %>%
   column_spec(2, width = "30em", background = "white") %>%  
   footnote(general = "Descriptive statistics which calculate the mean to range of weights for all female snowshoe hare populations in Bonanza Creek Experimental Forest (1999-2012)")    
-  
-  
+```
+
+## HW2: Principal Components Analysis 
+
+#Reading in the dataset 
+```{r}
+nutrients <- read_csv("usda_nutrients.csv")
+```
+
+#Doing some data wrangling to clean up and filter the data 
+```{r}
+
+#Filtered the dataset through food group in onder to have vegetables and vegetable products as well as fruits and fruit juices 
+
+#Retaining observations where the ShortDescrip column would contain the word "RAW" 
+usda <- nutrients %>% 
+  filter(FoodGroup  == "Vegetables and Vegetable Products" |
+           FoodGroup == "Fruits and Fruit Juices") %>%
+  filter(str_detect(ShortDescrip, pattern="RAW"))
+```
+
+#Useful Descrptive Summary (3-4 lines)
+```{r}
+
+```
+
+#Creating the finalized PCA Analysis 
+```{r, PCA, biplot, message = FALSE, warning = FALSE}
+
+usda_pca <- prcomp(nutrients[9:30], scale = TRUE)
+
+summary(usda_pca)
+
+usda_bilplot <- autoplot(usda_pca, 
+                       colour = NA, 
+                       loadings.label = TRUE, 
+                       loadings.label.size = 3, 
+                       loadings.label.colour = "black", 
+                       loadings.label.repel = TRUE) + 
+   labs(title = "PCA Biplot: Fruit and Vegetable Nutrient Levels",
+       x = "PC1 representing 24.80% of variance",
+       y = "PC2 representing 11.47% of variance",
+       caption = "PCA biplot representing fruit and vegetable nutrient levels \n including variables from protein (g) to zinc levels \n (Source: https://fdc.nal.usda.gov/index.html)") + 
+  theme_bw()
+
+usda_bilplot + theme(plot.caption=element_text(hjust=0.5)) + theme(plot.title=element_text(hjust = 0.5))
+```
+
+#Interpreting the PCA Biplot: Fruits and Vegetable Nutrient Levels Example 
+```{r}
+#Postive Trend: In terms of postive correlation, Riboflavin and Niacin are postively correlated with one another on account of the length and overlap of their biplot lines. Magnesium and Thiamin are postively correlated with each other as well as Iron and Folate. Sugar and Carbs are postively correlated with one another since they are still in close proximity to one another with their biplot lines.  
+
+#Negative Trend: In terms of negative correlation, Sugar and Protein are negatively correlated due to the 180 degree difference between biplot lines earning a correlation of -1. Sugar and Selenium also appear to be negatively correlated as well. 
+
+#Neutral Trend: In terms of minimal or no correlation, Sugar and Manganese are minimally correlated with one another due to the 90 degree difference of their biplot lines. Sugar and Fat have minimal or no correlation at all since there is a 270 degree difference between the two biplot lines. 
 ```
 
